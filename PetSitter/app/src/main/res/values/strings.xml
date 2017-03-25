@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PetSitter</string>
+    <string name="action_settings">Settings</string>
+    <string name="peso">peso</string>
+    <string name="aniversario">aniversário</string>
+    <string name="nome">nome</string>
+    <string name="adicionaranimal">Adicionar animal</string>
+    <string name="cuidar">Cuidar</string>
+</resources>

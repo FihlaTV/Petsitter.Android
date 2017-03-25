@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.katsutoshi.petsitter.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/petToolbarLayout"
+            layout="@layout/pet_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+<RelativeLayout
+    android:id="@+id/footer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/floatLayout"
+        layout="@layout/float_add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>
+
+<RelativeLayout
+    android:id="@+id/center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@id/footer"
+    android:layout_below="@id/header" >
+    <include
+        android:id="@+id/listPetsLayout"
+        layout="@layout/list_pets"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>
+
+
+    <ProgressBar
+        android:id="@+id/circularProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:theme="@style/CircularProgress"
+        android:visibility="invisible" />
+</RelativeLayout>
+
