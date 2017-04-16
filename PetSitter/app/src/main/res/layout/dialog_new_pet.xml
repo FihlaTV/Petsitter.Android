@@ -24,15 +24,6 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/etPetBirth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginTop="5dp"
-        android:hint="@string/aniversario"
-        android:inputType="date" />
-
-    <EditText
         android:id="@+id/etPetWeight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +31,15 @@
         android:layout_marginTop="5dp"
         android:hint="@string/peso"
         android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/etPetBirth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="5dp"
+        android:hint="@string/aniversario"
+        android:inputType="date" />
 
     <Button
         android:id="@+id/btnPetAdd"

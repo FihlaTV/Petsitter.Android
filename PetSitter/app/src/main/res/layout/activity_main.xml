@@ -4,44 +4,27 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.katsutoshi.petsitter.MainActivity">
+    tools:context="com.example.katsutoshi.petsitter.activity.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/header"
+    <include
+        android:id="@+id/petToolbarLayout"
+        layout="@layout/pet_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
 
-        <include
-            android:id="@+id/petToolbarLayout"
-            layout="@layout/pet_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+    <include
+        android:layout_below="@id/petToolbarLayout"
+        android:id="@+id/listPetsLayout"
+        layout="@layout/list_pets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-<RelativeLayout
-    android:id="@+id/footer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
     <include
         android:id="@+id/floatLayout"
         layout="@layout/float_add_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</RelativeLayout>
-
-<RelativeLayout
-    android:id="@+id/center"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_above="@id/footer"
-    android:layout_below="@id/header" >
-    <include
-        android:id="@+id/listPetsLayout"
-        layout="@layout/list_pets"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</RelativeLayout>
-
 
     <ProgressBar
         android:id="@+id/circularProgressBar"
