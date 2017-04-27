@@ -2,7 +2,7 @@
     <string name="app_name">PetSitter</string>
     <string name="action_settings">Settings</string>
     <string name="peso">peso</string>
-    <string name="aniversario">aniversário</string>
+    <string name="aniversario">Aniversário</string>
     <string name="nome">nome</string>
     <string name="adicionaranimal">Adicionar animal</string>
     <string name="cuidar">Cuidar</string>
@@ -11,8 +11,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_principal">principalActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">PetSitter</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="title_activity_health">Pet Health</string>
+
+    <string name="vacina">Vacina</string>
+    <string name="descricao">Descrição</string>
+    <string name="datadevacinacao">Data de Vacinação</string>
+    <string name="vacinar">Vacinar</string>
 </resources>

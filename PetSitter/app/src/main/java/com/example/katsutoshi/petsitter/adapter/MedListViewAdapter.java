@@ -9,33 +9,34 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.katsutoshi.petsitter.R;
+import com.example.katsutoshi.petsitter.model.Medication;
 import com.example.katsutoshi.petsitter.model.Pet;
 
 import java.util.List;
 
 /**
- * Created by Katsutoshi on 24/03/2017.
+ * Created by Katsutoshi on 23/04/2017.
  */
 
-public class ListViewAdapter extends BaseAdapter {
+public class MedListViewAdapter extends BaseAdapter {
 
     Activity activity;
-    List<Pet> lstPets;
+    List<Medication> lstMeds;
     LayoutInflater inflater;
 
-    public ListViewAdapter(Activity activity, List<Pet> lstPets) {
+    public MedListViewAdapter(Activity activity, List<Medication> lstMeds) {
         this.activity = activity;
-        this.lstPets = lstPets;
+        this.lstMeds = lstMeds;
     }
 
     @Override
     public int getCount() {
-        return lstPets.size();
+        return lstMeds.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return lstPets.get(position);
+        return lstMeds.get(position);
     }
 
     @Override
@@ -46,11 +47,13 @@ public class ListViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         inflater = (LayoutInflater)activity.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.listview_item,null);
+        View itemView = inflater.inflate(R.layout.listview_item_med,null);
 
-        TextView txtName = (TextView)itemView.findViewById(R.id.txtPetName);
+        TextView txtName = (TextView)itemView.findViewById(R.id.txtMedName);
+        TextView txtDesc = (TextView)itemView.findViewById(R.id.txtMedDesc);
 
-        txtName.setText(lstPets.get(position).getName());
+        txtDesc.setText(lstMeds.get(position).getDescription());
+        txtName.setText(lstMeds.get(position).getVetName());
 
         return itemView;
     }

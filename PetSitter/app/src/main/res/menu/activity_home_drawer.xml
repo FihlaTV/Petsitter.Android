@@ -1,19 +1,16 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.katsutoshi.petsitter.HomeActivity">
-
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_dog"
-            android:icon="@mipmap/ic_dog"
+            android:icon="@mipmap/dog"
+            android:checked="true"
             android:title="Cachorros"
-            app:showAsAction="always"/>
+            android:checkable="true"/>
         <item
             android:id="@+id/nav_cat"
-            android:icon="@mipmap/ic_cat"
+            android:icon="@mipmap/cat"
             android:title="Gatos"
-            app:showAsAction="always"/>
+            android:checkable="true"/>
     </group>
-
 </menu>

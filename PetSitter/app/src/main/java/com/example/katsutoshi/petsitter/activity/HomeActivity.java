@@ -1,8 +1,8 @@
-package com.example.katsutoshi.petsitter;
+package com.example.katsutoshi.petsitter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.katsutoshi.petsitter.adapter.ListViewAdapter;
+import com.example.katsutoshi.petsitter.adapter.PetListViewAdapter;
 import com.example.katsutoshi.petsitter.R;
 import com.example.katsutoshi.petsitter.model.Pet;
 import com.google.firebase.FirebaseApp;
@@ -38,8 +38,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+{
+
+    private DrawerLayout mDrawer;
+    private ActionBarDrawerToggle mToggle;
 
     private String child = "pets/dogs";
     private ListView listPets;
@@ -48,7 +51,7 @@ public class HomeActivity extends AppCompatActivity
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference mDBReference;
     private FloatingActionButton btnAdd;
-    private Pet selectedPet;
+    public static Pet selectedPet = new Pet();
 
     private List<Pet> pets = new ArrayList<>();
 
@@ -73,17 +76,18 @@ public class HomeActivity extends AppCompatActivity
                 AddPetAction();
             }
         });
-
         //btnAdd.setVisibility(View.INVISIBLE);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToggle = new ActionBarDrawerToggle(
+                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        mDrawer.addDrawerListener(mToggle);
+        mToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     private void addEventFirebaseListener() {
@@ -98,7 +102,7 @@ public class HomeActivity extends AppCompatActivity
                     Pet pet = postSnapshot.getValue(Pet.class);
                     pets.add(pet);
                 }
-                ListViewAdapter adapter = new ListViewAdapter(HomeActivity.this, pets);
+                PetListViewAdapter adapter = new PetListViewAdapter(HomeActivity.this, pets);
                 listPets.setAdapter(adapter);
                 listPets.setVisibility(View.VISIBLE);
             }
@@ -110,10 +114,20 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Pet lstPet = (Pet)parent.getItemAtPosition(position);
-                Toast.makeText(HomeActivity.this, lstPet.getName() + "Click", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, HealthActivity.class);
+                intent.putExtra("uid", (child + "/" + lstPet.getUid()));
+                startActivity(intent);
             }
         });
 
+        listPets.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Pet lstPet = (Pet)parent.getItemAtPosition(position);
+                Toast.makeText(HomeActivity.this, lstPet.getName() + " Long Click", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
         circularProgressBar.setVisibility(View.INVISIBLE);
     }
 
@@ -159,8 +173,7 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    private boolean validate(Editable name, Editable birth, Editable weight)
-    {
+    private boolean validate(Editable name, Editable birth, Editable weight) {
         AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
         errorDialog.setTitle("Ops !");
         errorDialog.setCancelable(true);
@@ -245,20 +258,25 @@ public class HomeActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_dog) {
-            this.child = "pets/dogs";
-            btnAdd.setVisibility(View.VISIBLE);
-            addEventFirebaseListener();
-        } else if (id == R.id.nav_cat) {
-            this.child = "pets/cats";
-            btnAdd.setVisibility(View.VISIBLE);
-            addEventFirebaseListener();
+        switch (id)
+        {
+            case R.id.nav_dog:
+                child = "pets/dogs";
+                btnAdd.setVisibility(View.VISIBLE);
+                addEventFirebaseListener();
+                break;
+
+            case R.id.nav_cat:
+                child = "pets/cats";
+                btnAdd.setVisibility(View.VISIBLE);
+                addEventFirebaseListener();
+                break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
     }
 }

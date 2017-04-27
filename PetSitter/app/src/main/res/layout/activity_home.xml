@@ -23,12 +23,4 @@
         app:headerLayout="@layout/nav_header_home"
         app:menu="@menu/activity_home_drawer" />
 
-    <ProgressBar
-        android:id="@+id/circularProgressBar"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:theme="@style/CircularProgress"
-        android:visibility="invisible" />
 </android.support.v4.widget.DrawerLayout>

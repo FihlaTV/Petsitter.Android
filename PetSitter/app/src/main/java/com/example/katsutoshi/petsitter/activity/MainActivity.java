@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.katsutoshi.petsitter.adapter.ListViewAdapter;
+import com.example.katsutoshi.petsitter.adapter.PetListViewAdapter;
 import com.example.katsutoshi.petsitter.R;
 import com.example.katsutoshi.petsitter.model.Pet;
 import com.google.firebase.FirebaseApp;
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     Pet pet = postSnapshot.getValue(Pet.class);
                     pets.add(pet);
                 }
-                ListViewAdapter adapter = new ListViewAdapter(MainActivity.this, pets);
+                PetListViewAdapter adapter = new PetListViewAdapter(MainActivity.this, pets);
                 listPets.setAdapter(adapter);
                 circularProgressBar.setVisibility(View.INVISIBLE);
                 listPets.setVisibility(View.VISIBLE);

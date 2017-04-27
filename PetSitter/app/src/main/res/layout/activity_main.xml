@@ -6,26 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.katsutoshi.petsitter.activity.MainActivity">
 
-    <include
-        android:id="@+id/petToolbarLayout"
-        layout="@layout/pet_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
-
-    <include
-        android:layout_below="@id/petToolbarLayout"
-        android:id="@+id/listPetsLayout"
-        layout="@layout/list_pets"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <include
-        android:id="@+id/floatLayout"
-        layout="@layout/float_add_btn"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <ProgressBar
         android:id="@+id/circularProgressBar"
         style="@style/Widget.AppCompat.ProgressBar"
@@ -34,5 +14,6 @@
         android:layout_centerInParent="true"
         android:theme="@style/CircularProgress"
         android:visibility="invisible" />
+
 </RelativeLayout>
 
