@@ -114,7 +114,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Pet lstPet = (Pet)parent.getItemAtPosition(position);
-                Intent intent = new Intent(HomeActivity.this, HealthActivity.class);
+                Intent intent = new Intent(HomeActivity.this, PetMenuActivity.class);
                 intent.putExtra("uid", (child + "/" + lstPet.getUid()));
                 startActivity(intent);
             }
@@ -149,13 +149,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         final Button mbtnAdd = (Button) mView.findViewById(R.id.btnPetAdd);
         //View mView = getLayoutInflater().inflate(R.layout.dialog_new_pet, null);
         mBuilder.setView(mView);
-        AlertDialog alert = mBuilder.create();
+        final AlertDialog alert = mBuilder.create();
         alert.show();
         mbtnAdd.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                        public void onClick(View view) {
-                                           createPet(mPetName.getText(), mPetBirth.getText(), mPetWeight.getText());
-                                           //btnAdd.setVisibility(View.VISIBLE);
+                                           btnAdd.setVisibility(View.VISIBLE);
+                                           if(createPet(mPetName.getText(), mPetBirth.getText(), mPetWeight.getText()))
+                                           {
+                                               alert.dismiss();
+                                           }
+                                           else {
+                                               mPetName.setText("");
+                                               mPetBirth.setText("");
+                                               mPetWeight.setText("");
+                                           }
                                        }
                                    }
         );
@@ -164,13 +172,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mPetWeight.setText("");
     }
 
-    private void createPet(Editable name, Editable birth, Editable weight) {
+    private boolean createPet(Editable name, Editable birth, Editable weight) {
 
         if(validate(name, birth, weight)) {
             Pet pet = new Pet(UUID.randomUUID().toString(), name.toString(), Double.parseDouble(weight.toString()), birth.toString());
             mDBReference.child(child).child(pet.getUid()).setValue(pet);
             Toast.makeText(HomeActivity.this, name.toString() + " cadastrado", Toast.LENGTH_LONG).show();
+            return true;
         }
+            return false;
     }
 
     private boolean validate(Editable name, Editable birth, Editable weight) {

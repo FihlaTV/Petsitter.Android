@@ -37,13 +37,11 @@ import static java.util.UUID.*;
 public class HealthActivity extends AppCompatActivity {
 
     private String child = "";
-    private Pet selectedPet;
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference mDBReference;
 
     private ListView listVaccinations;
     private List<Medication> vaccinations = new ArrayList<Medication>();
-    private Medication vaccination;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,6 @@ public class HealthActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         child += bundle.getString("uid");
-        child += "/vaccines";
 
         initFirebase();
         addEventFirebaseListener();
@@ -87,19 +84,20 @@ public class HealthActivity extends AppCompatActivity {
                                        public void onClick(View view) {
                                            addVacine(mVac.getText(), mVacDesc.getText(), mVacDate.getText());
                                            //btnAdd.setVisibility(View.VISIBLE);
+                                           mVac.setText("");
+                                           mVacDesc.setText("");
+                                           mVacDate.setText("");
                                        }
                                    }
         );
-        mVac.setText("");
-        mVacDesc.setText("");
-        mVacDate.setText("");
+
     }
 
     private void addVacine(Editable vac, Editable desc, Editable date) {
 
         if(validate(vac, desc, date)) {
             Medication vaccine = new Medication(randomUUID().toString(), vac.toString(), desc.toString(), date.toString());
-            mDBReference.child(child).child(vaccine.getUid()).setValue(vaccine);
+            mDBReference.child(child + "/vaccines").child(vaccine.getUid()).setValue(vaccine);
             Toast.makeText(HealthActivity.this, "Vacina feita", Toast.LENGTH_SHORT).show();
         }
     }
@@ -121,7 +119,7 @@ public class HealthActivity extends AppCompatActivity {
         //circularProgressBar.setVisibility(View.VISIBLE);
         listVaccinations.setVisibility(View.INVISIBLE);
 
-        mDBReference.child(child).addValueEventListener(new ValueEventListener() {
+        mDBReference.child(child + "/vaccines").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 vaccinations.clear();

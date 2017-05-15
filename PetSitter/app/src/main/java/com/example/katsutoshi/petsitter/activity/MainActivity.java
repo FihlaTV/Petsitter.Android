@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Pet> pets = new ArrayList<>();
 
+    View mView = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_new_pet, null);
+    final EditText mPetName = (EditText) mView.findViewById(R.id.etPetName);
+    final EditText mPetBirth = (EditText) mView.findViewById(R.id.etPetBirth);
+    final EditText mPetWeight = (EditText) mView.findViewById(R.id.etPetWeight);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,31 +70,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //btnAdd.setVisibility(View.INVISIBLE);
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                View mView = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_new_pet, null);
-                final EditText mPetName = (EditText) mView.findViewById(R.id.etPetName);
-                final EditText mPetBirth = (EditText) mView.findViewById(R.id.etPetBirth);
-                final EditText mPetWeight = (EditText) mView.findViewById(R.id.etPetWeight);
+                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
                 final Button mbtnAdd = (Button) mView.findViewById(R.id.btnPetAdd);
                 //View mView = getLayoutInflater().inflate(R.layout.dialog_new_pet, null);
                 mBuilder.setView(mView);
-                AlertDialog alert = mBuilder.create();
+                final AlertDialog alert = mBuilder.create();
                 alert.show();
                 mbtnAdd.setOnClickListener(new View.OnClickListener() {
                                                @Override
                                                public void onClick(View view) {
-                                                   createPet(mPetName.getText(), mPetBirth.getText(), mPetWeight.getText());
-                                                   //btnAdd.setVisibility(View.VISIBLE);
+                                                   btnAdd.setVisibility(View.VISIBLE);
+                                                   if(createPet(mPetName.getText(), mPetBirth.getText(), mPetWeight.getText()))
+                                                   {
+                                                       alert.hide();
+                                                   }
+                                                   else {
+                                                       mPetName.setText("");
+                                                       mPetBirth.setText("");
+                                                       mPetWeight.setText("");
+                                                   }
                                                }
                                            }
                 );
-                mPetBirth.setText("");
-                mPetName.setText("");
-                mPetWeight.setText("");
             }
         });
    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    //add items in the list by retrieving from firebase database
     private void addEventFirebaseListener() {
         circularProgressBar.setVisibility(View.VISIBLE);
         listPets.setVisibility(View.INVISIBLE);
@@ -138,30 +151,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-    /*
-     @Override
-     public boolean onOptionsItemSelected(MenuItem item)
-     {
-        if(item.getItemId() == R.id.btnPetAdd)
-        {
-            //createPet();
-        }
-     }
-     */
-
-    private void createPet(Editable name, Editable birth, Editable weight) {
+    private boolean createPet(Editable name, Editable birth, Editable weight) {
 
         if(validate(name, birth, weight)) {
             Pet pet = new Pet(UUID.randomUUID().toString(), name.toString(), Double.parseDouble(weight.toString()), birth.toString());
             mDBReference.child("pets").child(pet.getUid()).setValue(pet);
-            Toast.makeText(MainActivity.this, name.toString() + " cadastrado", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, name.toString() + " cadastrado", Toast.LENGTH_SHORT).show();
+            return true;
         }
+        return false;
     }
 
     private boolean validate(Editable name, Editable birth, Editable weight)
@@ -214,4 +212,5 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+    
 }
