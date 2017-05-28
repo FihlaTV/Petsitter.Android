@@ -116,6 +116,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Pet lstPet = (Pet)parent.getItemAtPosition(position);
                 Intent intent = new Intent(HomeActivity.this, PetMenuActivity.class);
                 intent.putExtra("uid", (child + "/" + lstPet.getUid()));
+                String str = lstPet.getName();
+                intent.putExtra("petname", str);
+
                 startActivity(intent);
             }
         });

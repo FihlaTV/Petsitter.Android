@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.katsutoshi.petsitter">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".PetSitter"
         android:allowBackup="true"
@@ -32,7 +34,15 @@
         <activity
             android:name=".activity.NotificationActivity"
             android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MessageActivity"
+            android:parentActivityName=".activity.NotificationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.NotificationActivity" />
+        </activity>
+        <activity android:name=".activity.CRUDHealthActivity"></activity>
     </application>
 
 </manifest>

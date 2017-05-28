@@ -13,7 +13,7 @@ public class Medication {
 
     public Medication() {}
 
-    public Medication(String uid, String description, String medicineName, String medDate) {
+    public Medication(String uid, String medicineName, String description, String medDate) {
         this.uid = uid;
         this.description = description;
         this.medicineName = medicineName;

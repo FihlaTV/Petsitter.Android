@@ -18,18 +18,19 @@ public class PetMenuActivity extends AppCompatActivity {
     private String child = "";
     private Intent intent;
     private ListView listOptions;
+    private String selectedPetName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_menu);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.menuToolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.menuToolbar);
         //setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
         child += bundle.getString("uid");
-
+        selectedPetName = bundle.getString("petname");
         listOptions = (ListView) findViewById(R.id.listPetMenu);
 
         final PetMenuViewAdapter adapter = new PetMenuViewAdapter(PetMenuActivity.this);
@@ -43,6 +44,7 @@ public class PetMenuActivity extends AppCompatActivity {
                     case 0:
                         intent = new Intent(PetMenuActivity.this, HealthActivity.class);
                         intent.putExtra("uid", child);
+                        intent.putExtra("petname", selectedPetName);
                         startActivity(intent);
                         break;
                     case 1:
@@ -51,11 +53,14 @@ public class PetMenuActivity extends AppCompatActivity {
                     case 2:
                         intent = new Intent(PetMenuActivity.this, NotificationActivity.class);
                         intent.putExtra("uid", child);
+                        intent.putExtra("petname", selectedPetName);
                         startActivity(intent);
                         break;
                     case 3:
                         break;
                     case 4:
+                        break;
+                    case 5:
                         break;
                 }
             }

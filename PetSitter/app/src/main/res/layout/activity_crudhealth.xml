@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    tools:context="com.example.katsutoshi.petsitter.activity.CRUDHealthActivity">
+
+    <TextView
+        android:id="@+id/pageTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:padding="16dp"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:hint="Nome da medicação"
+        android:layout_below="@+id/pageTitle"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/wrapperMedName"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/txtMedNameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:hint="Descrição da medicação"
+        android:layout_below="@+id/wrapperMedName"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/wrapperMedDesc"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/txtMedDescEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:hint="Data de aplicação"
+        android:layout_below="@+id/wrapperMedDesc"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/wrapperMedDate"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/txtMedDateEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+</RelativeLayout>

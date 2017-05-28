@@ -39,6 +39,7 @@ public class PetMenuViewAdapter extends BaseAdapter {
         options.add("Notificação");
         options.add("Agenda");
         options.add("Histórico");
+        options.add("Dados do Animal");
         return options;
     }
 
@@ -84,7 +85,9 @@ public class PetMenuViewAdapter extends BaseAdapter {
             case 4:
                 img.setImageResource(R.drawable.history);
                 break;
-
+            case 5:
+                img.setImageResource(R.drawable.pawprint);
+                break;
         }
         return itemView;
     }

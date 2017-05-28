@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -39,7 +43,7 @@ public class HealthActivity extends AppCompatActivity {
     private String child = "";
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference mDBReference;
-
+    private String selectedPetName = "";
     private ListView listVaccinations;
     private List<Medication> vaccinations = new ArrayList<Medication>();
 
@@ -53,7 +57,8 @@ public class HealthActivity extends AppCompatActivity {
         listVaccinations = (ListView) findViewById(R.id.healthList);
 
         Bundle bundle = getIntent().getExtras();
-        child += bundle.getString("uid");
+        child = bundle.getString("uid");
+        selectedPetName = bundle.getString("petname");
 
         initFirebase();
         addEventFirebaseListener();
@@ -119,7 +124,7 @@ public class HealthActivity extends AppCompatActivity {
         //circularProgressBar.setVisibility(View.VISIBLE);
         listVaccinations.setVisibility(View.INVISIBLE);
 
-        mDBReference.child(child + "/vaccines").addValueEventListener(new ValueEventListener() {
+        mDBReference.child(this.child + "/vaccines").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 vaccinations.clear();
@@ -138,7 +143,14 @@ public class HealthActivity extends AppCompatActivity {
         listVaccinations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(HealthActivity.this, "click", Toast.LENGTH_SHORT).show();
+                Medication selected = (Medication) parent.getItemAtPosition(position);
+                Intent intent = new Intent(HealthActivity.this, CRUDHealthActivity.class);
+                intent.putExtra("uid", (child + "/vaccines/" + selected.getUid()));
+                intent.putExtra("name", (selected.getVetName()));
+                intent.putExtra("desc", (selected.getDescription()));
+                intent.putExtra("date", (selected.getConsultDate()));
+                intent.putExtra("petname", selectedPetName);
+                startActivity(intent);
             }
         });
 
@@ -152,5 +164,4 @@ public class HealthActivity extends AppCompatActivity {
         });
         //circularProgressBar.setVisibility(View.INVISIBLE);
     }
-
 }

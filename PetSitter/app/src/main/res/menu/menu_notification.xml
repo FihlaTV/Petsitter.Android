@@ -2,9 +2,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.katsutoshi.petsitter.activity.NotificationActivity">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+    <item android:id="@+id/menu_add"
+        android:title="Add"
+        android:icon="@drawable/ic_action_new"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/menu_save"
+        android:title="Save"
+        android:icon="@drawable/ic_action_save"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/menu_delete"
+        android:title="Delete"
+        android:icon="@drawable/ic_action_delete"
+        app:showAsAction="always"/>
 </menu>
