@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loginActivity"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/imageLauncher"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:background="@drawable/pawprint"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:hint="Login"
+        android:layout_below="@+id/imageLauncher"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/wrapperLogin"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/txtLogin"
+            android:maxLines="1"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:hint="Senha"
+        android:layout_below="@+id/wrapperLogin"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/wrapperPassword"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/txtPassword"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+    
+    <Button
+        android:id="@+id/btnLogin"
+        android:text="Login"
+        android:background="@color/colorPrimary"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_below="@+id/wrapperPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    <TextView
+        android:layout_below="@+id/btnLogin"
+        android:id="@+id/forgotPassword"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:text="Esqueceu a senha ?"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_below="@+id/forgotPassword"
+        android:id="@+id/signUp"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:text="Cadastrar"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

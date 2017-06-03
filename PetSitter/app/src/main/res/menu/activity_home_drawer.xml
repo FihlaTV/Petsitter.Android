@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_dog"
-            android:icon="@mipmap/dog"
-            android:checked="true"
-            android:title="Cachorros"
-            android:checkable="true"/>
-        <item
-            android:id="@+id/nav_cat"
-            android:icon="@mipmap/cat"
-            android:title="Gatos"
-            android:checkable="true"/>
-    </group>
+    <item android:title="Animais">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_dog"
+                    android:checkable="true"
+                    android:checked="true"
+                    android:icon="@mipmap/dog"
+                    android:title="Cachorros" />
+                <item
+                    android:id="@+id/nav_cat"
+                    android:checkable="true"
+                    android:icon="@mipmap/cat"
+                    android:title="Gatos" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="Insumos">
+        <menu>
+            <item
+                android:id="@+id/nav_food"
+                android:checkable="true"
+                android:icon="@mipmap/dog_food"
+                android:title="Alimentos" />
+            <item
+                android:id="@+id/nav_medicine"
+                android:checkable="true"
+                android:icon="@mipmap/medical"
+                android:title="Medicamentos" />
+            <item
+                android:id="@+id/nav_others"
+                android:checkable="true"
+                android:title="Outros"
+                />
+        </menu>
+    </item>
+    <item android:title="Conta">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:checkable="true"
+                android:icon="@mipmap/logout"
+                android:title="Logout" />
+        </menu>
+    </item>
 </menu>

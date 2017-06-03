@@ -28,6 +28,7 @@ import com.example.katsutoshi.petsitter.adapter.PetListViewAdapter;
 import com.example.katsutoshi.petsitter.R;
 import com.example.katsutoshi.petsitter.model.Pet;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,10 +45,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mToggle;
 
-    private String child = "pets/dogs";
+    private String user = "";
+    private String child = "";
     private ListView listPets;
     private ProgressBar circularProgressBar;
 
+    FirebaseAuth auth;
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference mDBReference;
     private FloatingActionButton btnAdd;
@@ -59,6 +62,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Bundle bundle = getIntent().getExtras();
+        user = bundle.getString("uid");
+        if(child.equals("")) {
+            child = user + "/pets/dogs";
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -66,6 +75,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         listPets = (ListView) findViewById(R.id.listPets);
 
         //Firebase
+
+        auth = FirebaseAuth.getInstance();
+
         initFirebase();
         addEventFirebaseListener();
 
@@ -87,14 +99,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     private void addEventFirebaseListener() {
         circularProgressBar.setVisibility(View.VISIBLE);
         listPets.setVisibility(View.INVISIBLE);
 
-        mDBReference.child(this.child).addValueEventListener(new ValueEventListener() {
+        mDBReference.child(child).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 pets.clear();
@@ -118,7 +129,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra("uid", (child + "/" + lstPet.getUid()));
                 String str = lstPet.getName();
                 intent.putExtra("petname", str);
-
+                intent.putExtra("weight", lstPet.getWeight());
+                intent.putExtra("birth", lstPet.getBirthDate());
                 startActivity(intent);
             }
         });
@@ -178,7 +190,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private boolean createPet(Editable name, Editable birth, Editable weight) {
 
         if(validate(name, birth, weight)) {
-            Pet pet = new Pet(UUID.randomUUID().toString(), name.toString(), Double.parseDouble(weight.toString()), birth.toString());
+            Pet pet = new Pet(UUID.randomUUID().toString(), name.toString(),weight.toString(), birth.toString());
             mDBReference.child(child).child(pet.getUid()).setValue(pet);
             Toast.makeText(HomeActivity.this, name.toString() + " cadastrado", Toast.LENGTH_LONG).show();
             return true;
@@ -242,7 +254,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            moveTaskToBack(true);
         }
     }
 
@@ -276,15 +288,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (id)
         {
             case R.id.nav_dog:
-                child = "pets/dogs";
+                child = user + "/pets/dogs";
                 btnAdd.setVisibility(View.VISIBLE);
                 addEventFirebaseListener();
                 break;
-
             case R.id.nav_cat:
-                child = "pets/cats";
+                child = user + "/pets/cats";
                 btnAdd.setVisibility(View.VISIBLE);
                 addEventFirebaseListener();
+                break;
+            case R.id.nav_food:
+                // TODO: 02/06/2017
+                break;
+            case R.id.nav_medicine:
+                // TODO: 02/06/2017
+                break;
+            case R.id.nav_others:
+                // TODO: 02/06/2017
+                break;
+            case R.id.nav_logout:
+                auth.signOut();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.katsutoshi.petsitter.R;
 import com.example.katsutoshi.petsitter.adapter.PetMenuViewAdapter;
@@ -19,7 +20,9 @@ public class PetMenuActivity extends AppCompatActivity {
     private Intent intent;
     private ListView listOptions;
     private String selectedPetName = "";
+    private TextView tvSelectedPetName;
 
+    private String name, weight, birth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,14 @@ public class PetMenuActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         child += bundle.getString("uid");
         selectedPetName = bundle.getString("petname");
+        name = bundle.getString("petname");
+        weight = bundle.getString("weight");
+        birth = bundle.getString("birth");
+
         listOptions = (ListView) findViewById(R.id.listPetMenu);
+
+        tvSelectedPetName = (TextView) findViewById(R.id.pageTitle);
+        tvSelectedPetName.setText(bundle.getString("petname"));
 
         final PetMenuViewAdapter adapter = new PetMenuViewAdapter(PetMenuActivity.this);
         listOptions.setAdapter(adapter);
@@ -61,6 +71,12 @@ public class PetMenuActivity extends AppCompatActivity {
                     case 4:
                         break;
                     case 5:
+                        intent = new Intent(PetMenuActivity.this, CRUDPetActivity.class);
+                        intent.putExtra("uid", child);
+                        intent.putExtra("petname", selectedPetName);
+                        intent.putExtra("weight", weight);
+                        intent.putExtra("birth", birth);
+                        startActivity(intent);
                         break;
                 }
             }

@@ -10,7 +10,18 @@
     android:orientation="vertical"
     android:padding="16dp"
     tools:context="com.example.katsutoshi.petsitter.activity.NotificationActivity">
-
+    <TextView
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agendar tarefa"
+        android:textSize="26sp"/>
+    <View
+    android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+    android:layout_width="fill_parent"
+    android:background="@color/colorAccent" />
     <TextView
         android:id="@+id/txtAlertName"
         android:layout_width="match_parent"
@@ -41,14 +52,17 @@
         android:id="@+id/txtAlertDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Data da Tarefa" />
+        android:text="Data da Tarefa"
+        />
 
     <EditText
         android:id="@+id/etAlertDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="date" />
+        android:inputType="date"
+        android:focusableInTouchMode="false"
+        android:windowSoftInputMode="stateAlwaysHidden"/>
 
     <TextView
         android:id="@+id/txtAlertTime"
@@ -61,7 +75,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="datetime" />
+        android:inputType="datetime"
+        android:focusableInTouchMode="false"
+        android:windowSoftInputMode="stateAlwaysHidden"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnAgendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimaryDark"
+        android:text="Agendar" />
 
 </LinearLayout>
 </ScrollView>

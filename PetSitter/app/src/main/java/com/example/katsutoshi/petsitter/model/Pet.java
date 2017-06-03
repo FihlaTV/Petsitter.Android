@@ -7,14 +7,14 @@ package com.example.katsutoshi.petsitter.model;
 public class Pet {
     private String uid;
     private String name;
-    private int age;
-    private double weight;
+    private String age;
+    private String weight;
     private String birthDate;
 
     //Empty constructor
     public Pet () {}
 
-    public Pet(String uid, String name, double weight, String birthDate) {
+    public Pet(String uid, String name, String weight, String birthDate) {
         setUid(uid);
         setName(name);
         setWeight(weight);
@@ -36,19 +36,19 @@ public class Pet {
         this.uid = uid;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
-    public double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 

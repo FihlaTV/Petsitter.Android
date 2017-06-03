@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.katsutoshi.petsitter.adapter.MedListViewAdapter;
@@ -82,34 +83,63 @@ public class HealthActivity extends AppCompatActivity {
         final Button mbtnAdd = (Button) mView.findViewById(R.id.btnVacAdd);
         //View mView = getLayoutInflater().inflate(R.layout.dialog_new_pet, null);
         mBuilder.setView(mView);
-        AlertDialog alert = mBuilder.create();
+        final AlertDialog alert = mBuilder.create();
         alert.show();
         mbtnAdd.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                        public void onClick(View view) {
-                                           addVacine(mVac.getText(), mVacDesc.getText(), mVacDate.getText());
+                                           if(addVacine(mVac.getText(), mVacDesc.getText(), mVacDate.getText()))
+                                           {
+                                               alert.dismiss();
+                                           }
                                            //btnAdd.setVisibility(View.VISIBLE);
-                                           mVac.setText("");
-                                           mVacDesc.setText("");
-                                           mVacDate.setText("");
+                                           else {
+                                               mVac.setText("");
+                                               mVacDesc.setText("");
+                                               mVacDate.setText("");
+                                           }
                                        }
                                    }
         );
 
     }
 
-    private void addVacine(Editable vac, Editable desc, Editable date) {
+    private Boolean addVacine(Editable vac, Editable desc, Editable date) {
 
         if(validate(vac, desc, date)) {
             Medication vaccine = new Medication(randomUUID().toString(), vac.toString(), desc.toString(), date.toString());
             mDBReference.child(child + "/vaccines").child(vaccine.getUid()).setValue(vaccine);
-            Toast.makeText(HealthActivity.this, "Vacina feita", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HealthActivity.this, "Medicado", Toast.LENGTH_SHORT).show();
+            return true;
         }
+        return false;
     }
 
     private boolean validate(Editable vac, Editable desc, Editable date) {
-        //// TODO: 23/04/2017
-        return true;
+        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
+        errorDialog.setTitle("Ops !");
+        errorDialog.setCancelable(true);
+        TextView msg = new TextView(this);
+
+        try {
+            //validate mandatory fields
+            if (vac.toString().isEmpty()) {
+                msg.setText("Medicamento é obrigatório.");
+                errorDialog.setView(msg);
+                AlertDialog alert = errorDialog.create();
+                alert.show();
+                return false;
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            msg.setText("Algo inesperado aconteceu. \nTente novamente.");
+            errorDialog.setView(msg);
+            AlertDialog alert = errorDialog.create();
+            alert.show();
+            return false;
+        }
     }
 
     private void initFirebase() {

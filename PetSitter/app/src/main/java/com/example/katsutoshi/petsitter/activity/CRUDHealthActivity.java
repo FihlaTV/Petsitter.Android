@@ -42,8 +42,8 @@ public class CRUDHealthActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         child = bundle.getString("uid");
         name.setText(bundle.getString("name"));
-        desc.setText(bundle.getString("desc"));
-        date.setText(bundle.getString("date"));
+        desc.setText(bundle.getString("weight"));
+        date.setText(bundle.getString("birth"));
         selectedPetName.setText(bundle.getString("petname"));
 
         Toast.makeText(this, bundle.getString("petname") , Toast.LENGTH_LONG).show();
