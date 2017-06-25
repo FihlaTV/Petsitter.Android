@@ -1,5 +1,8 @@
 package com.example.katsutoshi.petsitter.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Katsutoshi on 24/03/2017.
  */
@@ -10,6 +13,9 @@ public class Pet {
     private String age;
     private String weight;
     private String birthDate;
+    private String healthRestrictions;
+    private String race;
+    private String genre;
 
     //Empty constructor
     public Pet () {}
@@ -58,5 +64,29 @@ public class Pet {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getHealthRestrictions() {
+        return healthRestrictions;
+    }
+
+    public void setHealthRestrictions(String healthRestrictions) {
+        this.healthRestrictions = healthRestrictions;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

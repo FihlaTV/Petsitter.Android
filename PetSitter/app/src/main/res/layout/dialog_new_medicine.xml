@@ -9,22 +9,22 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Adicionar alimento"
+        android:text="Adicionar medicamento"
         android:textStyle="bold"
         android:layout_marginTop="5dp"
         android:textSize="25sp" />
 
     <EditText
-        android:id="@+id/etFoodName"
+        android:id="@+id/etMedName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_marginTop="10dp"
-        android:hint="Nome do alimento"
+        android:hint="@string/nome"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/etFoodQnt"
+        android:id="@+id/etMedQnt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -33,7 +33,7 @@
         android:inputType="numberDecimal" />
 
     <EditText
-        android:id="@+id/etFoodDescription"
+        android:id="@+id/etMedDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -42,7 +42,7 @@
         android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/btnFoodAdd"
+        android:id="@+id/btnMedAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"

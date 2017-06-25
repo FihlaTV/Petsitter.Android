@@ -23,12 +23,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.HealthActivity"
-            android:label="@string/title_activity_health"
+            android:label="Medicamentos e Vacinas"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.PetMenuActivity" />
         <activity
             android:name=".activity.NotificationActivity"
-            android:label="@string/title_activity_notification"
+            android:label="Notificações"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.MessageActivity"
@@ -49,14 +49,21 @@
 
         <receiver android:name=".receiver.AlarmeNotificacao">
             <intent-filter>
-                <action android:name="com.example.katsutoshi.petsitter.util.NOTIFICACAO" />
+                <action android:name="NOTIFICACAO" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
+        <receiver android:name=".util.NotificationPublisher"/>
         <activity android:name=".activity.CRUDPetActivity" />
-        <activity android:name=".activity.FoodActivity"></activity>
+        <activity
+            android:name=".activity.PetFoodActivity"
+            android:label="@string/title_activity_pet_food"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.AgendaActivity"
+            android:label="Histórico"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

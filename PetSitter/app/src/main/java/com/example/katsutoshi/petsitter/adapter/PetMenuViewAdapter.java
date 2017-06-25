@@ -35,11 +35,10 @@ public class PetMenuViewAdapter extends BaseAdapter {
     private List<String> Opcoes() {
         List<String> options = new ArrayList<>();
         options.add("Saúde");
-        options.add("Alimentação");
         options.add("Notificação");
         options.add("Agenda");
         options.add("Histórico");
-        options.add("Dados do Animal");
+        //options.add("Dados do Animal");
         return options;
     }
 
@@ -74,20 +73,19 @@ public class PetMenuViewAdapter extends BaseAdapter {
                 img.setImageResource(R.drawable.stethoscope);
                 break;
             case 1:
-                img.setImageResource(R.drawable.ic_dog_food);
-                break;
-            case 2:
                 img.setImageResource(R.drawable.notification);
                 break;
-            case 3:
+            case 2:
                 img.setImageResource(R.drawable.notebook);
                 break;
-            case 4:
+            case 3:
                 img.setImageResource(R.drawable.history);
                 break;
+            /*
             case 5:
                 img.setImageResource(R.drawable.pawprint);
                 break;
+                */
         }
         return itemView;
     }

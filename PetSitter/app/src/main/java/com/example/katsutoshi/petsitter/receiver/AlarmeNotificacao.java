@@ -17,7 +17,7 @@ import java.util.Date;
 
 public class AlarmeNotificacao extends BroadcastReceiver {
     private static final String TAG = "petsitter";
-    private static final String ACTION = "com.example.katsutoshi.petsitter.util.NOTIFICACAO";
+    private static final String ACTION = "NOTIFICACAO";
     @Override
     public void onReceive(Context context, Intent intent) {
 

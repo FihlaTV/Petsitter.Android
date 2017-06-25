@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    tools:context="com.example.katsutoshi.petsitter.activity.CRUDHealthActivity">
+    tools:context="com.example.katsutoshi.petsitter.activity.CRUDPetActivity">
 
     <TextView
         android:textColor="@color/colorPrimaryDark"
@@ -57,4 +60,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:hint="Raça"
+        android:layout_below="@+id/wrapperPetBirth"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/wrapperPetRace"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/txtPetRaceEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:hint="Sexo"
+        android:layout_below="@+id/wrapperPetRace"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/wrapperPetGenre"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/txtPetGenreEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:hint="Restrições"
+        android:layout_below="@+id/wrapperPetGenre"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/wrapperPetRestrictions"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/txtPetRestrictionEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
 </RelativeLayout>
+</ScrollView>

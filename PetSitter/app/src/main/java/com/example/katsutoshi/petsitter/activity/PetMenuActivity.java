@@ -58,18 +58,26 @@ public class PetMenuActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 1:
-
-                        break;
-                    case 2:
                         intent = new Intent(PetMenuActivity.this, NotificationActivity.class);
                         intent.putExtra("uid", child);
                         intent.putExtra("petname", selectedPetName);
                         startActivity(intent);
                         break;
+                    case 2:
+                        intent = new Intent(PetMenuActivity.this, AgendaActivity.class);
+                        intent.putExtra("uid", child);
+                        intent.putExtra("petname", selectedPetName);
+                        intent.putExtra("state", "agenda");
+                        startActivity(intent);
+                        break;
                     case 3:
+                        intent = new Intent(PetMenuActivity.this, AgendaActivity.class);
+                        intent.putExtra("uid", child);
+                        intent.putExtra("petname", selectedPetName);
+                        intent.putExtra("state", "history");
+                        startActivity(intent);
                         break;
-                    case 4:
-                        break;
+                    /*
                     case 5:
                         intent = new Intent(PetMenuActivity.this, CRUDPetActivity.class);
                         intent.putExtra("uid", child);
@@ -78,6 +86,7 @@ public class PetMenuActivity extends AppCompatActivity {
                         intent.putExtra("birth", birth);
                         startActivity(intent);
                         break;
+                        */
                 }
             }
         });

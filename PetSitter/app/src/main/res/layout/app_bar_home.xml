@@ -28,6 +28,24 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_add" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgTitle"
+        android:src="@mipmap/dog"
+        android:layout_marginTop="60dp"/>
+
+    <TextView
+        android:id="@+id/emptyList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sua lista esta vazia. Clique em '+' para adicionar !"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
+        android:padding="16dp"
+        android:textAlignment="center"
+        android:layout_gravity="center" />
+
     <ListView
         android:padding="16dp"
         android:layout_marginTop="60dp"

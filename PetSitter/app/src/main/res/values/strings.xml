@@ -45,5 +45,8 @@
     <string name="medicamento">Medicamento</string>
     <string name="datademedicamento">Data de Medicação</string>
     <string name="medicar">Medicar</string>
+    <string name="action_about">Sobre</string>
+    <string name="title_activity_pet_food">PetFoodActivity</string>
+    <string name="title_activity_agenda">AgendaActivity</string>
 
 </resources>

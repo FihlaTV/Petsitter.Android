@@ -10,15 +10,16 @@ public class PetFood {
     private String petFoodName;
     private String description;
     private String petFoodDate;
+    private String petFoodQnt;
 
     public PetFood() {
     }
 
-    public PetFood(String uid, String petFoodName, String description, String petFoodDate) {
+    public PetFood(String uid, String petFoodName, String description, String petFoodQnt) {
         this.uid = uid;
         this.petFoodName = petFoodName;
         this.description = description;
-        this.petFoodDate = petFoodDate;
+        this.petFoodQnt = petFoodQnt;
     }
 
     public String getUid() {
@@ -51,5 +52,13 @@ public class PetFood {
 
     public void setPetFoodDate(String petFoodDate) {
         this.petFoodDate = petFoodDate;
+    }
+
+    public String getPetFoodQnt() {
+        return petFoodQnt;
+    }
+
+    public void setPetFoodQnt(String petFoodQnt) {
+        this.petFoodQnt = petFoodQnt;
     }
 }

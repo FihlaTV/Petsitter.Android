@@ -1,6 +1,7 @@
 package com.example.katsutoshi.petsitter.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,28 +25,55 @@ public class CRUDPetActivity extends AppCompatActivity {
 
 
     private TextView selectedPetName;
-    private EditText name, weight, birth;
+    private EditText name, weight, birth, race, genre, restrictions, qnt, desc;
     private String child;
+    private String state;
 
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference mDBReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crudpet);
-
-        name = (EditText)findViewById(R.id.txtPetNameEdit);
-        weight = (EditText)findViewById(R.id.txtPetWeightEdit);
-        birth = (EditText)findViewById(R.id.txtPetBirthEdit);
-        selectedPetName = (TextView)findViewById(R.id.pageTitle);
+        //setContentView(R.layout.activity_crudpet);
 
         Bundle bundle = getIntent().getExtras();
+        state = bundle.getString("state");
         child = bundle.getString("uid");
-        name.setText(bundle.getString("petname"));
-        weight.setText(bundle.getString("weight"));
-        birth.setText(bundle.getString("birth"));
-        selectedPetName.setText(bundle.getString("petname"));
 
+        if(state.equals("pet")) {
+            setContentView(R.layout.activity_crudpet);
+
+            name = (EditText)findViewById(R.id.txtPetNameEdit);
+            weight = (EditText)findViewById(R.id.txtPetWeightEdit);
+            birth = (EditText)findViewById(R.id.txtPetBirthEdit);
+            race = (EditText) findViewById(R.id.txtPetRaceEdit);
+            genre = (EditText)findViewById(R.id.txtPetGenreEdit);
+            restrictions = (EditText)findViewById(R.id.txtPetRestrictionEdit);
+            selectedPetName = (TextView)findViewById(R.id.pageTitle);
+
+            name.setText(bundle.getString("petname"));
+            weight.setText(bundle.getString("weight"));
+            birth.setText(bundle.getString("birth"));
+            selectedPetName.setText(bundle.getString("petname"));
+            race.setText(bundle.getString("race"));
+            genre.setText(bundle.getString("genre"));
+            restrictions.setText(bundle.getString("restrictions"));
+        }
+        else if(state.equals("input"))
+        {
+            setContentView(R.layout.activity_crudinput);
+
+            name = (EditText)findViewById(R.id.txtInputNameEdit);
+            qnt = (EditText)findViewById(R.id.txtInputQntEdit);
+            desc = (EditText)findViewById(R.id.txtInputDescEdit);
+            selectedPetName = (TextView)findViewById(R.id.pageTitle);
+
+            selectedPetName.setText(bundle.getString("name"));
+            name.setText(bundle.getString("name"));
+            qnt.setText(bundle.getString("qnt"));
+            desc.setText(bundle.getString("description"));
+        }
+        //Passar outros itens;
         Toast.makeText(this, bundle.getString("petname") , Toast.LENGTH_LONG).show();
 
         initFirebase();
@@ -67,7 +95,13 @@ public class CRUDPetActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_save) {
-            editPet(name.getText(), weight.getText(), birth.getText());
+            if(state.equals("pet")) {
+                editPet(name.getText(), weight.getText(), birth.getText(), restrictions.getText(), race.getText(), genre.getText());
+            }
+            if(state.equals("input"))
+            {
+                editInput(name.getText(), qnt.getText(), desc.getText());
+            }
             return true;
         }
         if (id == R.id.menu_delete)
@@ -94,18 +128,34 @@ public class CRUDPetActivity extends AppCompatActivity {
     private void deletePet() {
         mDBReference.child(child).removeValue();
         finish();
+        //Toast.makeText(CRUDPetActivity.this, "Excluído com sucesso", Toast.LENGTH_SHORT).show();
+        //startActivity(new Intent(CRUDPetActivity.this, HomeActivity.class));
     }
 
-    private void editPet(Editable name, Editable weight, Editable date) {
+    private void editPet(Editable name, Editable weight, Editable date, Editable restriction ,Editable race ,Editable genre) {
 
         if(validate(name, weight, date)) {
-            Pet pet = new Pet(randomUUID().toString(), name.toString(), weight.toString(), date.toString());
+            //Pet pet = new Pet(randomUUID().toString(), name.toString(), weight.toString(), date.toString());
             mDBReference.child(child).child("name").setValue(name.toString());
             mDBReference.child(child).child("weight").setValue(weight.toString());
             mDBReference.child(child).child("birthDate").setValue(date.toString());
+            mDBReference.child(child).child("healthRestrictions").setValue(restriction.toString());
+            mDBReference.child(child).child("race").setValue(race.toString());
+            mDBReference.child(child).child("genre").setValue(genre.toString());
             Toast.makeText(CRUDPetActivity.this, "Atualizado com sucesso", Toast.LENGTH_SHORT).show();
+            //startActivity(new Intent(CRUDPetActivity.this, HomeActivity.class));
         }
     }
+
+    private void editInput(Editable name, Editable qnt, Editable desc) {
+
+            //Pet pet = new Pet(randomUUID().toString(), name.toString(), weight.toString(), date.toString());
+            mDBReference.child(child).child("name").setValue(name.toString());
+            mDBReference.child(child).child("weight").setValue(qnt.toString());
+            mDBReference.child(child).child("birthDate").setValue(desc.toString());
+            Toast.makeText(CRUDPetActivity.this, "Atualizado com sucesso", Toast.LENGTH_SHORT).show();
+            //startActivity(new Intent(CRUDPetActivity.this, HomeActivity.class));
+        }
 
     private boolean validate(Editable name, Editable weight, Editable birth) {
         AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);

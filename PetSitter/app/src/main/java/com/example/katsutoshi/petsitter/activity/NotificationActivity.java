@@ -1,7 +1,11 @@
 package com.example.katsutoshi.petsitter.activity;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,12 +15,16 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,8 +33,17 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.katsutoshi.petsitter.R;
+import com.example.katsutoshi.petsitter.model.Agenda;
+import com.example.katsutoshi.petsitter.model.Medication;
 import com.example.katsutoshi.petsitter.util.AlarmUtil;
+import com.example.katsutoshi.petsitter.util.NotificationPublisher;
 import com.example.katsutoshi.petsitter.util.NotificationUtil;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,9 +53,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static java.util.UUID.randomUUID;
+
 public class NotificationActivity extends AppCompatActivity implements View.OnClickListener {
 
 
+    private String child = "";
+    private FirebaseDatabase mFirebaseDB;
+    private DatabaseReference mDBReference;
+    private String selectedPetName = "";
+    private int ID = 0;
     private static final String TAG = "petsitter";
     private int day, month, year, hour, minutes;
     private EditText title, description, date, time;
@@ -51,6 +75,11 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+
+        Bundle bundle = getIntent().getExtras();
+        child = bundle.getString("uid");
+
+        initFirebase();
 
         title = (EditText) findViewById(R.id.etAlertName);
         description = (EditText) findViewById(R.id.etAlertDescription);
@@ -66,10 +95,11 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
                     Calendar calendar = Calendar.getInstance();
                     Long currentTime = calendar.getTimeInMillis();
                     Long differenceTime = millis - currentTime;
-                    AlarmUtil.schedule(NotificationActivity.this, new Intent(NotificationActivity.this, MessageActivity.class), differenceTime);
+                    //AlarmUtil.schedule(NotificationActivity.this, new Intent(NotificationActivity.this, MessageActivity.class), differenceTime);
                     //cal.setTimeInMillis(millis);
-
-                    Toast.makeText(NotificationActivity.this,"Alarme para :" + TimeUnit.HOURS.toHours(differenceTime), Toast.LENGTH_LONG).show();
+                    scheduleNotification(getNotification(title.getText().toString(),description.getText().toString()), differenceTime);
+                    addNotification(title.getText(), description.getText(), millis,date.getText(), time.getText());
+                    Toast.makeText(NotificationActivity.this,"Agendado com sucesso", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(NotificationActivity.this,"Erro", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
@@ -223,4 +253,57 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
             }
         }
     }
+
+    private void scheduleNotification(Notification notification, long delay) {
+
+        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, notificationID());
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, notificationID(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+    }
+
+    private Notification getNotification(String title, String desc) {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setDefaults(Notification.DEFAULT_ALL);
+        builder.setContentTitle(title);
+        builder.setContentText(desc);
+        builder.setSmallIcon(R.mipmap.ic_dog);
+        return builder.build();
+    }
+
+    private void initFirebase() {
+        FirebaseApp.initializeApp(this);
+        mFirebaseDB = FirebaseDatabase.getInstance();
+        mDBReference = mFirebaseDB.getReference();
+        //sync the database
+        mDBReference.keepSynced(true);
+    }
+
+    private void addNotification(Editable title, Editable desc, Long millis, Editable date, Editable time) {
+
+            Agenda notific = new Agenda(randomUUID().toString(), title.toString(), desc.toString(), millis, date.toString(), time.toString());
+            mDBReference.child(child + "/agenda").child(notific.getUid()).setValue(notific);
+    }
+
+    private int notificationID()
+    {
+
+        mDBReference.child(this.child + "/agenda").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    ID++;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        return ID;
+    }
 }
+

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.katsutoshi.petsitter.receiver.AlarmeNotificacao;
+
 /**
  * Created by Katsutoshi on 26/05/2017.
  */
@@ -16,9 +18,13 @@ public class AlarmUtil {
     //agenda alarme com data/hora informado
     public static void schedule(Context context, Intent intent, Long triggerAtMillis)
     {
-        PendingIntent p = PendingIntent.getBroadcast(context,1, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        //PendingIntent p = PendingIntent.getBroadcast(context,1, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent pIntent = new Intent(context, AlarmeNotificacao.class);
 
         AlarmManager alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+        PendingIntent p = PendingIntent.getBroadcast(context,1, pIntent ,PendingIntent.FLAG_UPDATE_CURRENT);
+
         alarm.set(AlarmManager.RTC_WAKEUP, triggerAtMillis, p);
 
         Log.d("petsitter-alarm", "Alarme agendado com sucesso.");
